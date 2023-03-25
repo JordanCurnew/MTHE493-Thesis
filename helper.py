@@ -72,7 +72,7 @@ def plot_training_results(train_rate_array, train_distortion_array, test_rate_ar
     epoch_array = range(len(train_rate_array))
 
     # Create the figure and axes for the first plot
-    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 5),gridspec_kw={'wspace': 0.4})
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 5),gridspec_kw={'wspace': 0.5})
 
     # Plot the training rate on the primary y-axis
     ax1.plot(epoch_array, train_rate_array, color='tab:red', linestyle='--', label='Train')
