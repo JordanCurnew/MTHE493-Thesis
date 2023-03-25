@@ -52,43 +52,70 @@ def plot(image, num_images=1):
             plt.show()
 
 
-def plot_rate_and_distortion(rate_array, distortion_array):
+def plot_training_results(train_rate_array, train_distortion_array, test_rate_array, test_distortion_array, train_bpp_array):
     """
-    Plots the rate and distortion arrays on the same plot with two y-axes.
+    Plots the training and test rate and distortion arrays on the same plot with two y-axes, and plots the
+    training and test bpp arrays on a separate plot.
 
     Args:
-        rate_array (list or array-like): An array of rate values.
-        distortion_array (list or array-like): An array of distortion values.
+        train_rate_array (list or array-like): An array of training rate values.
+        train_distortion_array (list or array-like): An array of training distortion values.
+        test_rate_array (list or array-like): An array of test rate values.
+        test_distortion_array (list or array-like): An array of test distortion values.
+        test_bpp_array (list or array-like): An array of test bpp values.
 
     Returns:
         None.
     """
 
-    # Create an array of epoch values (assuming the rate and distortion arrays have the same length)
-    epoch_array = range(len(rate_array))
+    # Create an array of epoch values (assuming the arrays have the same length)
+    epoch_array = range(len(train_rate_array))
 
-    # Create the figure and axes
-    fig, ax1 = plt.subplots()
+    # Create the figure and axes for the first plot
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 5),gridspec_kw={'wspace': 0.4})
 
-    # Plot the rate on the primary y-axis
-    ax1.plot(epoch_array, rate_array, color='tab:red')
+    # Plot the training rate on the primary y-axis
+    ax1.plot(epoch_array, train_rate_array, color='tab:red', linestyle='--', label='Train')
     ax1.set_xlabel('Epoch')
     ax1.set_ylabel('Rate', color='tab:red')
     ax1.tick_params(axis='y', labelcolor='tab:red')
 
-    # Create a second y-axis
+    # Create a second y-axis for the training distortion
     ax2 = ax1.twinx()
 
-    # Plot the distortion on the secondary y-axis
-    ax2.plot(epoch_array, distortion_array, color='tab:blue')
+    # Plot the training distortion on the secondary y-axis
+    ax2.plot(epoch_array, train_distortion_array, color='tab:blue', linestyle='--')
     ax2.set_ylabel('Distortion', color='tab:blue')
     ax2.tick_params(axis='y', labelcolor='tab:blue')
 
-    # Add a title
-    plt.title('Rate and Distortion vs Epoch')
+    # Plot the test rate on the primary y-axis
+    ax1.plot(epoch_array, test_rate_array, color='tab:red', linestyle='-', label='Test')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
 
-    # Show the plot
-    plt.show()
+    # Plot the test distortion on the secondary y-axis
+    ax2.plot(epoch_array, test_distortion_array, color='tab:blue', linestyle='-')
+
+    legend = ax1.legend(loc='upper left')
+    for line in legend.get_lines():
+        line.set_linewidth(1.5)
+        line.set_color('black')
+
+    # Add a title to the first plot
+    ax1.set_title('Train and Test Rates and Distortions vs Epoch')
+
+    # Create the second plot
+    ax3 = plt.subplot(1, 2, 2)
+
+    # Plot the training bpp on the primary y-axis
+    ax3.plot(epoch_array, test_bpp_array, color='black', linestyle='-', label='Test')
+    ax3.set_xlabel('Epoch')
+    ax3.set_ylabel('BPP', color='black')
+    ax3.tick_params(axis='y', labelcolor='black')
+    
+    ax3.set_title('Test BPP vs Epoch')
+    
+    # Plot the test bpp on the primary y-axis
+    ax3.plot
 
 
 def get_subblocks(arr, row_dim, col_dim):

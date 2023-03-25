@@ -95,7 +95,8 @@ class CustomCompression(Model):
         history = {
             'loss' : [],
             'rate' : [],
-            'distortion' : []
+            'distortion' : [],
+            'test_bpp': []
         } 
 
         optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
@@ -146,4 +147,5 @@ class CustomCompression(Model):
             history["loss"].append(np.mean(epoch_loss))
             history["rate"].append(np.mean(epoch_rate))
             history["distortion"].append(np.mean(epoch_distortion))
+            history["test_bpp"].append(np.mean(epoch_test_entropy))
         return history
