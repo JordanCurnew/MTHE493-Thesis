@@ -1,2 +1,2 @@
 from . import helper
-from model import CustomCompression
+from . import model
