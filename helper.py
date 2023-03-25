@@ -52,6 +52,45 @@ def plot(image, num_images=1):
             plt.show()
 
 
+def plot_rate_and_distortion(rate_array, distortion_array):
+    """
+    Plots the rate and distortion arrays on the same plot with two y-axes.
+
+    Args:
+        rate_array (list or array-like): An array of rate values.
+        distortion_array (list or array-like): An array of distortion values.
+
+    Returns:
+        None.
+    """
+
+    # Create an array of epoch values (assuming the rate and distortion arrays have the same length)
+    epoch_array = range(len(rate_array))
+
+    # Create the figure and axes
+    fig, ax1 = plt.subplots()
+
+    # Plot the rate on the primary y-axis
+    ax1.plot(epoch_array, rate_array, color='tab:red')
+    ax1.set_xlabel('Epoch')
+    ax1.set_ylabel('Rate', color='tab:red')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
+
+    # Create a second y-axis
+    ax2 = ax1.twinx()
+
+    # Plot the distortion on the secondary y-axis
+    ax2.plot(epoch_array, distortion_array, color='tab:blue')
+    ax2.set_ylabel('Distortion', color='tab:blue')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
+
+    # Add a title
+    plt.title('Rate and Distortion vs Epoch')
+
+    # Show the plot
+    plt.show()
+
+
 def get_subblocks(arr, row_dim, col_dim):
     """
     Divide a 2D array into subblocks of size row_dim x col_dim.
