@@ -193,3 +193,42 @@ def run_model_full_image(image, model, block_dim):
     reconstructed_image = get_original_image(model_blocks, block_dim, block_dim)
     
     return reconstructed_image
+
+
+def run_ensemble_full_image(image, models, conditions, block_dim):
+    """
+        Runs a list of models on an input image in a block-wise manner 
+        and returns the reconstructed output image.
+        
+        Parameters:
+        - image: input image to run the model on
+        - models: list of models to apply to the image blocks
+        - conditions: list of conditions for each model
+        - block_dim: size of blocks to split the image into
+        
+        Returns:
+        - reconstructed_image: output image reconstructed from the model's output blocks
+        """
+    # Split image into blocks
+    image_blocks = get_subblocks(image, block_dim, block_dim)
+    
+    # Preprocess blocks for model input
+    image_blocks = np.array(image_blocks, dtype=np.float32)
+    image_blocks = np.reshape(image_blocks, (-1, block_dim, block_dim, 1))
+    
+    model_blocks = []
+    for i, block in enumerate(image_blocks):
+        for j, condition in enumerate(conditions):
+            if condition(block):
+                model = models[j]
+                break
+        model_blocks.append(model.predict(np.array([block])))
+    
+    # Reconstruct image from model output blocks
+    model_blocks = np.squeeze(np.array(model_blocks))
+    model_blocks = np.array(model_blocks)
+    model_blocks = model_blocks.reshape(-1,block_dim,block_dim)
+    
+    reconstructed_image = get_original_image(model_blocks, block_dim, block_dim)
+    
+    return reconstructed_image
