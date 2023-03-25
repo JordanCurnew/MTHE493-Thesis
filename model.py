@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.models import Model
 import numpy as np
 from scipy.stats import norm
+import time
 
 
 class CustomCompression(Model):
@@ -99,6 +100,7 @@ class CustomCompression(Model):
 
         optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
         for epoch in range(num_epochs):
+            start_time = time.time()
             latent = self.analysis(x_train)
             self.mu = tf.math.reduce_mean(latent, 0)
             self.var = tf.math.reduce_variance(latent, 0)
@@ -133,7 +135,9 @@ class CustomCompression(Model):
             epoch_rate /= num_batches
             epoch_distortion /= num_batches
 
-            print_string = f'Epoch {"{:03d}".format(epoch+1)}: '
+            end_time = time.time()
+
+            print_string = f'Epoch {"{:03d}".format(epoch+1)} ({"{:03d}".format(end_time-start_time)} sec): '
             print_string += f'Loss = {"{:.0f}".format(epoch_loss)},  Rate = {"{:.4f}".format(epoch_rate)}, Distortion = {"{:.4f}".format(epoch_distortion)}, '
             print_string += f'Test Distortion = {"{:.4f}".format(epoch_test_distortion)}, Test Rate = {"{:.0f}".format(epoch_test_rate)}, Test BPP = {"{:.4f}".format(epoch_test_entropy)}'
     
