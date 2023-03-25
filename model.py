@@ -142,7 +142,7 @@ class CustomCompression(Model):
 
             print_string = f'Epoch {"{:03d}".format(epoch+1)} ({"{:03d}".format(int(end_time-start_time))} sec): '
             print_string += f'Loss = {"{:.0f}".format(epoch_loss)},  Rate = {"{:.4f}".format(epoch_rate)}, Distortion = {"{:.4f}".format(epoch_distortion)}, '
-            print_string += f'Test Distortion = {"{:.4f}".format(epoch_test_distortion)}, Test Rate = {"{:.0f}".format(epoch_test_rate)}, Test BPP = {"{:.4f}".format(epoch_test_entropy)}'
+            print_string += f'Test Distortion = {"{:.4f}".format(epoch_test_distortion)}, Test Rate = {"{:.4f}".format(epoch_test_rate)}, Test BPP = {"{:.4f}".format(epoch_test_entropy)}'
     
             print(print_string)
 
