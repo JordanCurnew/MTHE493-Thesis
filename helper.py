@@ -52,7 +52,7 @@ def plot(image, num_images=1):
             plt.show()
 
 
-def plot_training_results(train_rate_array, train_distortion_array, test_rate_array, test_distortion_array, train_bpp_array):
+def plot_training_results(train_rate_array, train_distortion_array, test_rate_array, test_distortion_array, test_bpp_array):
     """
     Plots the training and test rate and distortion arrays on the same plot with two y-axes, and plots the
     training and test bpp arrays on a separate plot.
