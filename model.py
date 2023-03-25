@@ -97,7 +97,7 @@ class CustomCompression(Model):
             'train_rate' : [],
             'train_distortion' : [],
             'test_rate': [],
-            'test_distortoin': [],
+            'test_distortion': [],
             'test_bpp': []
         } 
 
