@@ -120,10 +120,10 @@ class CustomCompression(Model):
 
                 num_batches += 1
             if epoch % 2 == 0:
-                result = model(x_train[:2], training=False)
+                result = self(x_train[:2], training=False)
 #                 plot(x_train[0], 1)
 #                 plot(result[0], 1)
-                result = model(validation_data[:2], training=False)
+                result = self(validation_data[:2], training=False)
 #                 plot(validation_data[0], 1)
 #                 plot(result[0], 1)
             
