@@ -94,8 +94,10 @@ class CustomCompression(Model):
 
         history = {
             'loss' : [],
-            'rate' : [],
-            'distortion' : [],
+            'train_rate' : [],
+            'train_distortion' : [],
+            'test_rate': [],
+            'test_distortoin': [],
             'test_bpp': []
         } 
 
@@ -145,7 +147,9 @@ class CustomCompression(Model):
             print(print_string)
 
             history["loss"].append(np.mean(epoch_loss))
-            history["rate"].append(np.mean(epoch_rate))
-            history["distortion"].append(np.mean(epoch_distortion))
+            history["train_rate"].append(np.mean(epoch_rate))
+            history["train_distortion"].append(np.mean(epoch_distortion))
+            history["test_rate"].append(np.mean(epoch_test_rate))
+            history["test_distortion"].append(np.mean(epoch_test_distortion))
             history["test_bpp"].append(np.mean(epoch_test_entropy))
         return history
