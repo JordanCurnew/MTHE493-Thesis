@@ -132,8 +132,13 @@ class CustomCompression(Model):
             epoch_loss /= num_batches
             epoch_rate /= num_batches
             epoch_distortion /= num_batches
-            print("Epoch {}: Loss = {}, Rate = {}, Distortion = {}".format(epoch+1, epoch_loss, epoch_rate, epoch_distortion))
-            print("          Test BPP = {}, Test Rate = {}, Test Distortion = {}".format(epoch_test_entropy, epoch_test_rate, epoch_test_distortion))
+
+            print_string = f'Epoch {"{:03d}".format(epoch+1)}: '
+            print_string += f'Loss = {"{:.0f}".format(epoch_loss)},  Rate = {"{:.4f}".format(epoch_rate)}, Distortion = {"{:.4f}".format(epoch_distortion)}, '
+            print_string += f'Test Distortion = {"{:.4f}".format(epoch_test_distortion)}, Test Rate = {"{:.0f}".format(epoch_test_rate)}, Test BPP = {"{:.4f}".format(epoch_test_entropy)}'
+    
+            print(print_string)
+
             history["loss"].append(np.mean(epoch_loss))
             history["rate"].append(np.mean(epoch_rate))
             history["distortion"].append(np.mean(epoch_distortion))
